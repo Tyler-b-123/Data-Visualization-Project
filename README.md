@@ -1,6 +1,6 @@
 # Data-Visualization-Project
 Golf stats from 2017-2018.<br />
-This is a list of what all of the fields refer too.<br />
+This is a list of what all of the fields refer too.
 <ul>
   <li>The "name" field refers to the golfers name.</li>
   <li>The "position" field refers to the golfers rainking based on the stats.</li>
