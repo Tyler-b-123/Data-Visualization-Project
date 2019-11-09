@@ -1,4 +1,4 @@
-# Data-Visualization-Project
+# Data-Visualization-Project-line-and-dot
 This is one of my ideas its not at all fialized just making sure that it works.<br />
 I plan on adding a hover to the dots to reveal the players name.<br />
 Golf stats from 2017-2018.<br />
