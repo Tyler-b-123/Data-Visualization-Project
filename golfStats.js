@@ -9,7 +9,7 @@ function stuff(data){
  	    tbody.innerHTML += tr;
     }
     
-    //this is all just a prof of concept to see how it works not finalized at all
+    //this is all just a prof of concept to see how it works not finalized at all may change the size aswell
     var margin = {top: 20, right: 20, bottom: 30, left:40},
         width = 700 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
@@ -44,6 +44,7 @@ function stuff(data){
 
     //adding the data points x will be the players rank and y will be there average driving distance
     //may add a hover to the dots to display the players name
+    //may also add like a trend line or something to this
 
     var svg = d3.select("#chart-id")
         .append("svg")
@@ -51,14 +52,6 @@ function stuff(data){
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    svg.append("path")
-        .data([data])
-        .attr("class", "line")
-        .attr("d", valueLine)
-        .attr("stroke", "orange")
-        .attr("stroke-width", 2)
-        .attr("fill", "#FFFFFF");
 
     var path = svg.selectAll("dot")
         .data(data)
