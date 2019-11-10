@@ -1,14 +1,9 @@
-
 function stuff(data){
     console.log(data);
-    var tbody = document.getElementById("tbody");
-    for (var i = 0; i < data.length; i++) {
-	    var tr = "<tr>";
-        tr += "<td>" + data[i]["Name"] + "&nbsp &nbsp &nbsp &nbsp" + "</td>" + "<td>" + data[i]["position"].toString() + "&nbsp &nbsp &nbsp &nbsp" + "</td>" +
-        "<td>" + data[i]["Yds/Drive"].toString() + "</td>" + "</tr>";
- 	    tbody.innerHTML += tr;
-    }
+    makeChart(data, "#chart-id", 1);
+    makeChart(data, "#chart-id2", 0);
     
+    function makeChart(data, divId, flag){
     //this is all just a prof of concept to see how it works not finalized at all
     var margin = {top: 20, right: 20, bottom: 30, left:40},
         width = 700 - margin.left - margin.right,
@@ -45,13 +40,14 @@ function stuff(data){
     //adding the data points x will be the players rank and y will be there average driving distance
     //may add a hover to the dots to display the players name
 
-    var svg = d3.select("#chart-id")
+    var svg = d3.select(divId)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    if (flag === 1){
     svg.append("path")
         .data([data])
         .attr("class", "line")
@@ -59,6 +55,7 @@ function stuff(data){
         .attr("stroke", "orange")
         .attr("stroke-width", 2)
         .attr("fill", "#FFFFFF");
+    }
 
     var path = svg.selectAll("dot")
         .data(data)
@@ -80,11 +77,12 @@ function stuff(data){
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
+        //need below for axis in the future with decimal points and very small differences like birdie conversion left blank for now 
         svg.append("g")
             .call(d3.axisLeft(y).tickFormat(function (d){
                 return d3.format("") (d)
             }));
-
+    }
 }
 
 d3.json("https://raw.githubusercontent.com/Tyler-b-123/Data-Visualization-Project/master/playerStats.json").then(stuff);

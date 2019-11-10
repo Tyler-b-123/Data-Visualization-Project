@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+<link rel="stylesheet" href="golfStats.css">
+<script type="text/javascript" src="playerStats.json">
+</script>
+<head>
+    <title>2017/2018 Golf Stats Visualization</title>
+</head>
+<body>
+        <h1>Tyler Buoy Project Progress Report</h1>
+        <h1>Comparing position to Yds/Drive line and dot plot</h1>
+        <p>
+            This is my first idea it is to use a line and dot plot to plot the data.</br>
+            I will also impliment a hover function over the dots on the graph so that you can see the players name.</br>
+            I also plan on taking you idea for the comparison bettwen 2 players using the golf hole I plan on having you select</br>
+            the player's that you want to compare by clicking on 2 of the dots and then it will use there data to create the golf comparison.</br>
+            For chosing what to compare I will always have the x axis be the players rank and make an html form so that the user can select the stats to compare.</br>
+            The purpose of this is to show all of the top 50 players so that the viewer can get a idea for the corelation aswell as to act as a selection for the golf hole part of the visualization</br>
+        </p>
+        <a href="https://github.com/Tyler-b-123/Data-Visualization-Project/tree/line-and-dot">Link to this branch on github</a>
+        <h2>What the form will look like</h2>
+        <p>not working right now just to be show for prototype</p>
+        <h2>Please select the statistic to compare</h2>
+        <form action="progress.html">
+            <select name="toBeCompared">
+                <option value="Yds/Drive">Yds/Drive</option>
+                <option value="drivingAcc">Driver Accuracy</option>
+                <option value="putts/Hole">AVG Putts per Hole</option>
+                <option value="birdies">Amount of birdies</option>
+                <option value="birdieConv">Birdie conversion rate</option>
+                <option value="avgScore">Average score</option>
+                <option value="avgFinish">Average finish</option>
+            </select>
+            <br><br>
+            <input type="submit">
+        </form>
+    <div id="chart-id"></div>
+    <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <h1>Comparing position to Yds/Drive dot plot</h1>
+    <p>
+        This is my second idea it is to use a dot plot for the data.</br>
+        I will also impliment a hover function over the dots on the graph so that you can see the players name.</br>
+        I also plan on taking you idea for the comparison bettwen 2 players using the golf hole I plan on having you select</br>
+        the player's that you want to compare by clicking on 2 of the dots and then it will use there data to create the golf comparison.</br>
+        For chosing what to compare I will always have the x axis be the players rank and make an html form so that the user can select the stats to compare.</br>
+        The purpose of this is to show all of the top 50 players so that the viewer can get a idea for the corelation aswell as to act as a selection for the golf hole part of the visualization</br>
+    </p>
+    <a href="https://github.com/Tyler-b-123/Data-Visualization-Project/tree/dot-chart">Link to this branch on github</a>
+    <h2>What the form will look like</h2>
+            <p>not working right now just to be show for prototype</p>
+            <h2>Please select the statistic to compare</h2>
+            <form action="progress.html">
+                <select name="toBeCompared">
+                    <option value="Yds/Drive">Yds/Drive</option>
+                    <option value="drivingAcc">Driver Accuracy</option>
+                    <option value="putts/Hole">AVG Putts per Hole</option>
+                    <option value="birdies">Amount of birdies</option>
+                    <option value="birdieConv">Birdie conversion rate</option>
+                    <option value="avgScore">Average score</option>
+                    <option value="avgFinish">Average finish</option>
+                </select>
+                <br><br>
+                <input type="submit">
+            </form>
+    <div id="chart-id2"></div>
+    <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <h1>Comparing position to Yds/Drive dot plot + trend line</h1>
+    <p>
+        This is my third idea for the main part of the visualization and this is the one that I believe would work the best with this data set</br>
+        It will be kinda like the ones from above except it will have a trend line instead of lines connecting it all or a just a dot plot will also have the html form</br>
+        This idea will also contain the html form to choose as well as the hover to reveal name and the clicking on the dots to choose the 2 people to compare in the secondary part</br>
+    </p>
+    <img src="add_trend_line.PNG">
+    <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <h1>Idea 1 for second part of the visualization</h1>
+    <div id="picture1">
+        <img src="idea_1.jpeg" style="width:720px;height:1366px;">
+    </div>
+    <h1>Idea 2 for the second part of the vixualization</h1>
+    <div id="picture2">
+        <img src="idea_2.jpeg" style="width:720px;height:1366px;">
+    </div>
+</body>
+
+<!--Make sure this is the last thing in the code-->
+<script type="text/javascript" src="golfStats.js"></script>
+</html>
