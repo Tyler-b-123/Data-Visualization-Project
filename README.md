@@ -1,4 +1,6 @@
-# Data-Visualization-Project
+# Data-Visualization-Project-dot-chart
+This is one of my ideas its not at all fialized just making sure that it works.<br />
+I plan on adding a hover to the dots to reveal the players name.<br />
 Golf stats from 2017-2018.<br />
 This is a list of what all of the fields refer too.
 <ul>

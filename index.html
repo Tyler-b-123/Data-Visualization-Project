@@ -5,17 +5,23 @@
 </script>
 <head>
     <title>2017/2018 Golf Stats Visualization</title>
-    <div id="header">
-        <div class="table">
-            <h1>Player rankings</h1>
-        </div>
-    </div>
 </head>
 <body>
-    <table>
-            <tbody id="tbody">
-            </tbody>             
-    </table>
+    <h2>Please select the statistic to compare</h2>
+    <form name="firstForm" action="#" method="POST">
+            <select name="toBeCompared" id="selectForm">
+                <option value="Yds/Drive">Yds/Drive</option>
+                <option value="drivingAcc">Driver Accuracy</option>
+                <option value="putts/Hole">AVG Putts per Hole</option>
+                <option value="birdies">Amount of birdies</option>
+                <option value="birdieConv">Birdie conversion rate</option>
+                <option value="avgScore">Average score</option>
+                <option value="avgFinish">Average finish</option>
+            </select>
+            <br><br>
+            <input type="button" value="submit" onclick="createChart()">
+    </form>
+    <div id="chart-id"></div>
 </body>
 
 <!--Make sure this is the last thing in the code-->
