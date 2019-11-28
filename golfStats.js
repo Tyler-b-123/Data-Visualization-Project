@@ -114,7 +114,23 @@ function stuff(data){
                 return d3.format("") (d)
             }));
 
+        //trendline
+
+        var xSeries = d3.range(1, 51);
+        var ySeries = data.map(function(d) {return parseFloat(d[comparison]); });
+
+        var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+
+        var x1 = 1;
+        var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+        var x2 = 50;
+        var y2 = leastSquaresCoeff[0] * 50 + leastSquaresCoeff[1];
+        var trendData = [[x1,y1,x2,y2]];
+
+        createTrendline(trendData);
+
         }
+
 }
 }
 
@@ -126,8 +142,6 @@ function update(data){
     var chartType = document.getElementById('selectForm').value;
     console.log(chartType);
 
-    var personOne = null;
-    var personTwo = null;
     var chartTitle = null;
    
     if (chartType === "Yds/Drive"){
@@ -205,6 +219,67 @@ function updateGraph(offset, comparison){
         .call(d3.axisLeft(y).tickFormat(function (d){
             return d3.format("") (d)
         }));
+
+    var xSeries = d3.range(1, 51);
+    var ySeries = data.map(function (d) { return parseFloat(d[comparison]); });
+
+    var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+
+    var x1 = 1;
+    var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+    var x2 = 50;
+    var y2 = leastSquaresCoeff[0] * 50 + leastSquaresCoeff[1];
+    var trendData = [[x1, y1, x2, y2]];
+
+    modifyTrendLine(trendData);
+    }
 }
 }
+
+function createTrendline(trendData){
+    var trendline = svg.selectAll(".trendline")
+            .data(trendData);
+
+    trendline.enter()
+        .append("line")
+        .attr("class", "trendline")
+        .attr("x1", function (d){ return x(d[0]); })
+        .attr("y1", function (d){ return y(d[1]); })
+        .attr("x2", function (d){ return x(d[2]); })
+        .attr("y2", function (d){ return y(d[3]); })
+        .attr("stroke", "black")
+        .attr("stroke-width", 1);
+}
+
+function modifyTrendLine(trendData){
+    svg.selectAll(".trendline")
+        .data(trendData)
+        .transition()
+        .duration(1000)
+        .attr("x1", function (d){ return x(d[0]); })
+        .attr("y1", function (d){ return y(d[1]); })
+        .attr("x2", function (d){ return x(d[2]); })
+        .attr("y2", function (d){ return y(d[3]); });
+}
+
+function leastSquares(xSeries, ySeries) {
+    var reduceSumFunc = function(prev, cur) { return prev + cur; };
+        
+    var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+    var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+
+    var ssXX = xSeries.map(function(d) { return Math.pow(d - xBar, 2); })
+        .reduce(reduceSumFunc);
+        
+    var ssYY = ySeries.map(function(d) { return Math.pow(d - yBar, 2); })
+        .reduce(reduceSumFunc);
+            
+    var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+        .reduce(reduceSumFunc);
+            
+    var slope = ssXY / ssXX;
+    var intercept = yBar - (xBar * slope);
+    var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+        
+    return [slope, intercept, rSquare];
 }
