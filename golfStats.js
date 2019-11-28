@@ -262,6 +262,8 @@ function modifyTrendLine(trendData){
         .attr("y2", function (d){ return y(d[3]); });
 }
 
+
+//article where i got the formula http://bl.ocks.org/benvandyke/8459843
 function leastSquares(xSeries, ySeries) {
     var reduceSumFunc = function(prev, cur) { return prev + cur; };
         
