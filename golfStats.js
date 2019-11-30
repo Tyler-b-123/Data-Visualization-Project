@@ -6,6 +6,10 @@ var margin = {top: 100, right: 20, bottom: 30, left:40},
 width = 800 - margin.left - margin.right,
 height = 600 - margin.top - margin.bottom;
 
+var driverMargin = {driverTop: 10, driverRight: 20, driverBottom: 30, driverLeft: 40},
+driverWidth = 400 - driverMargin.driverLeft - driverMargin.driverRight,
+driverHeight = 200 - driverMargin.driverTop - driverMargin.driverBottom;
+
 //setting up the scale
 var x = d3.scaleLinear()
         .range([0, width]);
@@ -21,20 +25,27 @@ var svg = d3.select("#chart-id")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var drivingSvg = d3.select(".driverComp")
+    .append("svg");
+    
+
 var div = d3.select("body").append("div")
     .attr("class", "tooltip-hover")
     .style("opacity", 0);
 
+
+var personOne = null;
+var personTwo = null;
+
 //calling createChart which will make the chart and set the default comparison to Yds/Drive
 createChart();
+//making the comparison and just defaulting everything to 0 to modity it with transitions
+createComparison();
 function createChart(){
     d3.json("https://raw.githubusercontent.com/Tyler-b-123/Data-Visualization-Project/master/playerStats.json").then(stuff);
 function stuff(data){
     console.log(data);
    
-   
-   var personOne = null;
-   var personTwo = null;
    var chartTitle = "Average Yards per Drive";
 
     plotPoints(285, "Yds/Drive");
@@ -94,7 +105,7 @@ function stuff(data){
                     .style('fill', 'orange');
                 personOne = d;
                 console.log(personOne);
-                alert(d["Name"] + " added as first person for comparison.");
+                //alert(d["Name"] + " added as first person for comparison.");
             }
             else if (personOne != null && personTwo === null){
                 d3.select(this).transition()
@@ -103,7 +114,7 @@ function stuff(data){
                     .style('fill', 'red');
                 personTwo = d;
                 console.log(personTwo);
-                alert(d["Name"] + " added as second person for comparison.");
+                //alert(d["Name"] + " added as second person for comparison.");
             }
             else{
                 alert("You have already selected the maximum amount of players to be compared.");
@@ -195,7 +206,6 @@ function update(data){
     }
 
 function updateGraph(offset, comparison){
-
 
     x.domain(d3.extent(data, function(d) {
         return d["position"];
@@ -298,4 +308,45 @@ function leastSquares(xSeries, ySeries) {
     var rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
         
     return [slope, intercept, rSquare];
+}
+
+function createComparison(){
+    drivingSvg.selectAll("rect")
+        .data([personOne, personTwo])
+        .enter()
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", function(d,i) {return i * 80})
+        .attr("width", 200)
+        .attr("height", 20)
+        .attr("fill", function(d,i){
+            if (i === 0){
+                return "orange";
+            }
+            if (i === 1){
+                return "red";
+            }
+        });
+}
+
+function modifyComparison(){
+    if (personOne === null){
+        alert("You have zero players selected please select 2 players to use the comparison function.");
+    }
+    else if(personOne != null && personTwo === null){
+        alert("You have only selected 1 player please select another player to use the comparison function.");
+    }
+    else{
+        drivingSvg.selectAll("rect")
+            .data([personOne, personTwo])
+            .transition()
+            .duration(1000)
+            .attr("width", function(d,i){
+                return ((d["Yds/Drive"] / 319.8) * 250);
+            })
+            .attr("height", function(d,i){
+                return ((d["drivingAcc"] / 74.8) * 40);
+            });
+
+    }
 }

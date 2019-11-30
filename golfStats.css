@@ -49,8 +49,8 @@ div.tooltip-hover{
     text-align: center;
     padding: .5rem;
     background: white;
-    color: #313639;
-    border: 1px solid #313639;
+    color: black;
+    border: 1px solid black;
     border-radius: 8px;
     pointer-events: none;
     font-size: 1.2rem;
@@ -62,4 +62,16 @@ div.tooltip-hover{
     right: 50px;
     width: 500px;
     height: 100px;
+}
+#golfHoleComp{
+    position: absolute;
+    right: 50px;
+    top: 500px;
+    width: 800px;
+    height: 500px;
+}
+.driverComp{
+    position: absolute;
+    top: 200px;
+    left: 30px;
 }
