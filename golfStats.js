@@ -111,6 +111,7 @@ function stuff(data){
             else if (personOne != null && personTwo === null){
                 personTwo = d;
                 console.log(personTwo);
+                modifyComparison();
                 //alert(d["Name"] + " added as second person for comparison.");
             }
             else{
@@ -360,6 +361,8 @@ function modifyComparison(){
             .duration(1000)
             .text(personTwo["Name"]);
 
+
+        removeSelectedPlayers();
     }
 }
 

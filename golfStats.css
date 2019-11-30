@@ -104,12 +104,4 @@ div.tooltip-hover{
     top: 30px;
     fill: red;
 }
-.modifyButton{
-    position: absolute;
-    top: 80px;
-}
-.removeButton{
-    position: absolute;
-    top: 80px;
-    left: 150px;
-}
+
