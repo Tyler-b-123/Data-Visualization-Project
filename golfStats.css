@@ -56,3 +56,10 @@ div.tooltip-hover{
     font-size: 1.2rem;
     width: 150px;
 }
+#golfHoleButtons{
+    position: absolute;
+    top: 200px;
+    right: 50px;
+    width: 500px;
+    height: 100px;
+}
