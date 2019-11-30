@@ -6,10 +6,6 @@ var margin = {top: 100, right: 20, bottom: 30, left:40},
 width = 800 - margin.left - margin.right,
 height = 600 - margin.top - margin.bottom;
 
-var driverMargin = {driverTop: 10, driverRight: 20, driverBottom: 30, driverLeft: 40},
-driverWidth = 400 - driverMargin.driverLeft - driverMargin.driverRight,
-driverHeight = 200 - driverMargin.driverTop - driverMargin.driverBottom;
-
 //setting up the scale
 var x = d3.scaleLinear()
         .range([0, width]);
@@ -33,9 +29,17 @@ var div = d3.select("body").append("div")
     .attr("class", "tooltip-hover")
     .style("opacity", 0);
 
+var person1Txt = d3.select(".person1");
+var person1Legend = d3.select(".person1Legend")
+    .append("svg");
+var person2Txt = d3.select(".person2");
+var person2Legend = d3.select(".person2Legend")
+    .append("svg");
+
 
 var personOne = null;
 var personTwo = null;
+var comparison = null;
 
 //calling createChart which will make the chart and set the default comparison to Yds/Drive
 createChart();
@@ -48,7 +52,8 @@ function stuff(data){
    
    var chartTitle = "Average Yards per Drive";
 
-    plotPoints(285, "Yds/Drive");
+    comparison = "Yds/Drive";
+    plotPoints(285, comparison);
 
     function plotPoints(offset, comparison){
 
@@ -99,19 +104,11 @@ function stuff(data){
         //already been chosen also has error checking to make sure only 2 players are added.
         .on('click', function (d,i){
             if (personOne === null){
-                d3.select(this).transition()
-                    .duration('10')
-                    .style('opacity', 1)
-                    .style('fill', 'orange');
                 personOne = d;
                 console.log(personOne);
                 //alert(d["Name"] + " added as first person for comparison.");
             }
             else if (personOne != null && personTwo === null){
-                d3.select(this).transition()
-                    .duration('10')
-                    .style('opacity', 1)
-                    .style('fill', 'red');
                 personTwo = d;
                 console.log(personTwo);
                 //alert(d["Name"] + " added as second person for comparison.");
@@ -317,8 +314,8 @@ function createComparison(){
         .append("rect")
         .attr("x", 0)
         .attr("y", function(d,i) {return i * 80})
-        .attr("width", 200)
-        .attr("height", 20)
+        .attr("width", 0)
+        .attr("height", 0)
         .attr("fill", function(d,i){
             if (i === 0){
                 return "orange";
@@ -327,6 +324,12 @@ function createComparison(){
                 return "red";
             }
         });
+    
+    person1Txt.append("text")
+        .text("No player Selected");
+    person2Txt.append("text")
+        .text("No player Selected");
+    
 }
 
 function modifyComparison(){
@@ -348,5 +351,27 @@ function modifyComparison(){
                 return ((d["drivingAcc"] / 74.8) * 40);
             });
 
+        person1Txt.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personOne["Name"]);
+        person2Txt.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personTwo["Name"]);
+
+    }
+}
+
+function removeSelectedPlayers(){
+    if(personOne === null){
+        alert("There are no players selected.");
+    }
+    else if(personOne != null && personTwo === null){
+        alert("You have one player selected select another to compare.\nIf you wish to remove all players add another then re-select the remove button");
+    }
+    else{
+        personOne = null;
+        personTwo = null;
     }
 }

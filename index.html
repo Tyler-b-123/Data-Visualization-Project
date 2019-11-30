@@ -33,16 +33,22 @@
     <div id="chart-id"></div>
     <div id="hover-id"></div>
     <div id="golfHoleButtons">
-        <button type="button" value="Submit" onclick="modifyComparison()">Compare Players</button>
-        <div class="person1"></div>
-        <div class="person2"></div>
+        <button class = "modifyButton" type="button" value="Submit" onclick="modifyComparison()">Compare Players</button>
+        <button class = "removeButton" type="button" value="Submit" onclick="removeSelectedPlayers()">Remove Players</button>
     </div>
     <div id="golfHole">
+        <div class="person1"></div>
+        <svg class="person1Legend">
+            <rect width="20" height="20"/>
+        </svg>
+        <div class="person2"></div>
+        <svg class="person2Legend">
+            <rect width="20" height="20"/>
+        </svg>
         <svg class="hole" width="800" height="500">
             <ellipse cx="250" cy="250" rx="250" ry="120" />
             <ellipse cx="550" cy="250" rx="150" ry="200" />
             <rect y="150" width="100" height="200" />
-            
         </svg>
     </div>
     <div id="golfHoleComp">
