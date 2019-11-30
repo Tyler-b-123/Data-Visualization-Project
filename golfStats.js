@@ -21,6 +21,10 @@ var svg = d3.select("#chart-id")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip-hover")
+    .style("opacity", 0);
+
 //calling createChart which will make the chart and set the default comparison to Yds/Drive
 createChart();
 function createChart(){
@@ -64,11 +68,21 @@ function stuff(data){
             d3.select(this).transition()
                 .duration('10')
                 .style('opacity', 1);
+            div.transition()
+                .duration('50')
+                .style("opacity", 1);
+            div.html(d["Name"])
+                .style("left", (d3.event.pageX + 1) + "px")
+                .style("right", (d3.event.pageY + 1) + "px");
+
         })
         .on('mouseout', function (d,i){
             d3.select(this).transition()
                 .duration('10')
                 .style('opacity', .4);
+            div.transition()
+                .duration('50')
+                .style("opacity", 0);
         })
         //the click function will add players to variables to be compared and change the point to orage to indicate it has
         //already been chosen also has error checking to make sure only 2 players are added.
@@ -157,7 +171,7 @@ function update(data){
     if (chartType === "putts/Hole"){
        //alert("You have chosen putts/Hole");
         chartTitle = "Average Putts per Hole";
-       updateGraph(1.6, "putts/Hole");
+       updateGraph(1.68, "putts/Hole");
     }
     if (chartType === "birdies"){
        // alert("You have chosen birdies");

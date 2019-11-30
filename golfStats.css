@@ -20,3 +20,39 @@
     left: 50px;
     position: relative;
 }
+#golfHole{
+    position: absolute;
+    right: 50px;
+    top: 500px;
+    width: 800px;
+    height: 500px;
+}
+.hole rect{
+    fill: rgb(18, 199, 18);
+    fill-opacity: 1;
+    stroke: darkgreen;
+    stroke-width: 2;
+    stroke-opacity: 1;
+}
+.hole ellipse{
+    fill: rgb(18, 199, 18);;
+    fill-opacity: 1;
+    stroke: darkgreen;
+    stroke-width: 2;
+    stroke-opacity: 1;
+}
+.hole circle{
+    fill: red;
+}
+div.tooltip-hover{
+    position: absolute;
+    text-align: center;
+    padding: .5rem;
+    background: white;
+    color: #313639;
+    border: 1px solid #313639;
+    border-radius: 8px;
+    pointer-events: none;
+    font-size: 1.2rem;
+    width: 150px;
+}
