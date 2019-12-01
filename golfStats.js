@@ -3,8 +3,8 @@
 
 //setting up the size of the graph for the first part
 var margin = {top: 100, right: 20, bottom: 30, left:40},
-width = 800 - margin.left - margin.right,
-height = 600 - margin.top - margin.bottom;
+    width = 800 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 //setting up the scale
 var x = d3.scaleLinear()
@@ -21,9 +21,18 @@ var svg = d3.select("#chart-id")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+//used for comparing the 2 seleted players driver statistics
 var drivingSvg = d3.select(".driverComp")
     .append("svg");
-    
+
+var birdieSvg = d3.select(".birdieComp")
+    .append("svg");
+
+var puttsSvg = d3.select(".puttsComp")
+    .append("svg");
+
+var scoreSvg = d3.select(".scoreComp")
+    .append("svg");
 
 var div = d3.select("body").append("div")
     .attr("class", "tooltip-hover")
@@ -36,6 +45,19 @@ var person2Txt = d3.select(".person2");
 var person2Legend = d3.select(".person2Legend")
     .append("svg");
 
+var driverDistLabel = d3.select(".driverDistTitle");
+var birdiePerLabel = d3.select(".birdiePerTitle");
+var puttsAvgLabel = d3.select(".puttsAvgTitle");
+var scoreAvgLabel = d3.select(".scoreAvgTitle");
+
+var driverTxt1 = d3.select(".driverTxt1");
+var driverTxt2 = d3.select(".driverTxt2");
+var birdiesTxt1 = d3.select(".birdiesTxt1");
+var birdiesTxt2 = d3.select(".birdiesTxt2");
+var puttsTxt1 = d3.select(".puttsTxt1");
+var puttsTxt2 = d3.select(".puttsTxt2");
+var scoreTxt1 = d3.select(".scoreTxt1");
+var scoreTxt2 = d3.select(".scoreTxt2");
 
 var personOne = null;
 var personTwo = null;
@@ -324,12 +346,108 @@ function createComparison(){
             if (i === 1){
                 return "red";
             }
-        });
+        })
+        .style("stroke", "black")
+        .style("stroke-width", "2");
+
+    driverTxt1.append("text")
+        .text("");
+    driverTxt2.append("text")
+        .text("");
+
+    birdieSvg.selectAll("rect")
+        .data([personOne, personTwo])
+        .enter()
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", function(d,i) {return i * 30})
+        .attr("width", 0)
+        .attr("height", 30)
+        .attr("fill", function(d,i){
+            if (i === 0){
+                return "orange";
+            }
+            if (i === 1){
+                return "red";
+            }
+        })
+        .style("stroke", "black")
+        .style("stroke-width", "2");
+
+    birdiesTxt1.append("text")
+        .text("");
+    birdiesTxt2.append("text")
+        .text("");
+
+    puttsSvg.selectAll("rect")
+        .data([personOne, personTwo])
+        .enter()
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", function(d,i) {return i * 30})
+        .attr("width", 0)
+        .attr("height", 30)
+        .attr("fill", function(d,i){
+            if (i === 0){
+                return "orange";
+            }
+            if (i === 1){
+                return "red";
+            }
+        })
+        .style("stroke", "black")
+        .style("stroke-width", "2");
+
+    puttsTxt1.append("text")
+        .text("");
+    puttsTxt2.append("text")
+        .text("");
+
+    scoreSvg.selectAll("rect")
+        .data([personOne, personTwo])
+        .enter()
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", function(d,i) {return i * 30})
+        .attr("width", 0)
+        .attr("height", 30)
+        .attr("fill", function(d,i){
+            if (i === 0){
+                return "orange";
+            }
+            if (i === 1){
+                return "red";
+            }
+        })
+        .style("stroke", "black")
+        .style("stroke-width", "2");
+
+    scoreTxt1.append("text")
+        .text("");
+    scoreTxt2.append("text")
+        .text("");
     
     person1Txt.append("text")
         .text("No player Selected");
     person2Txt.append("text")
         .text("No player Selected");
+
+    driverDistLabel.append("text")
+        .style("font-family", "sans-serif")
+        .style("color", "white")
+        .style("font-size", "1rem");
+    birdiePerLabel.append("text")
+        .style("font-family", "sans-serif")
+        .style("color", "white")
+        .style("font-size", "1rem");
+    puttsAvgLabel.append("text")
+        .style("font-family", "sans-serif")
+        .style("color", "white")
+        .style("font-size", "1rem");
+    scoreAvgLabel.append("text")
+        .style("font-family", "sans-serif")
+        .style("color", "white")
+        .style("font-size", "1rem");
     
 }
 
@@ -352,6 +470,88 @@ function modifyComparison(){
                 return ((d["drivingAcc"] / 74.8) * 40);
             });
 
+        driverDistLabel.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text("Driver Distance & Accuracy");
+
+        driverTxt1.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personOne["Yds/Drive"] + " YDS");
+
+        driverTxt2.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personTwo["Yds/Drive"] + " YDS");
+
+        birdieSvg.selectAll("rect")
+            .data([personOne, personTwo])
+            .transition()
+            .duration(1000)
+            .attr("width", function(d,i){
+                return ((d["birdieConv"] / 38.8) * 100)
+            });
+
+        birdiePerLabel.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text("% Birdie Conv");
+
+        birdiesTxt1.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personOne["birdieConv"] + "%");
+
+        birdiesTxt2.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personTwo["birdieConv"] + "%");
+
+        puttsSvg.selectAll("rect")
+            .data([personOne, personTwo])
+            .transition()
+            .duration(1000)
+            .attr("width", function(d,i){
+                return ((d["putts/Hole"] / 1.81) * 100)
+            });
+
+        puttsAvgLabel.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text("Avg Putts");
+
+        puttsTxt1.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personOne["putts/Hole"]);
+        puttsTxt2.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personTwo["putts/Hole"]);
+
+        scoreSvg.selectAll("rect")
+            .data([personOne, personTwo])
+            .transition()
+            .duration(1000)
+            .attr("width", function(d,i){
+                return ((d["avgScore"] / 71) * 100)
+            });
+
+        scoreAvgLabel.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text("Avg Score");
+
+        scoreTxt1.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personOne["avgScore"]);
+        scoreTxt2.selectAll("text")
+            .transition()
+            .duration(1000)
+            .text(personTwo["avgScore"]);
+        
         person1Txt.selectAll("text")
             .transition()
             .duration(1000)
@@ -360,7 +560,6 @@ function modifyComparison(){
             .transition()
             .duration(1000)
             .text(personTwo["Name"]);
-
 
         removeSelectedPlayers();
     }

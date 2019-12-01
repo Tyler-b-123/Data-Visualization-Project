@@ -49,6 +49,7 @@
 }
 div.tooltip-hover{
     position: absolute;
+    font-family: sans-serif;
     text-align: center;
     padding: .5rem;
     background: white;
@@ -78,6 +79,11 @@ div.tooltip-hover{
     top: 200px;
     left: 30px;
 }
+.driverDistTitle{
+    position: absolute;
+    top: 170px;
+    left: 40px;
+}
 .person1{
     position: absolute;
     font-size: 20px;
@@ -88,6 +94,8 @@ div.tooltip-hover{
     position: absolute;
     width: 20px;
     height: 20px;
+    stroke: black;
+    stroke-width: 2;
     fill: orange;
 }
 .person2{
@@ -102,6 +110,107 @@ div.tooltip-hover{
     width: 20px;
     height: 20px;
     top: 30px;
+    stroke: black;
+    stroke-width: 2;
     fill: red;
 }
-
+.birdieComp{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 120px;
+    left: 500px;
+}
+.birdiePerTitle{
+    position: absolute;
+    top: 100px;
+    left: 500px;
+}
+.puttsComp{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 220px;
+    left: 500px;
+}
+.puttsAvgTitle{
+    position: absolute;
+    top: 200px;
+    left: 500px;
+}
+.driverTxt1{
+    position: absolute;
+    top: 206px;
+    left: 31px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
+.driverTxt2{
+    position: absolute;
+    top: 288px;
+    left: 31px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
+.birdiesTxt1{
+    position: absolute;
+    top: 125px;
+    left: 501px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
+.birdiesTxt2{
+    position: absolute;
+    top: 155px;
+    left: 501px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
+.puttsTxt1{
+    position: absolute;
+    top: 225px;
+    left: 501px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
+.puttsTxt2{
+    position: absolute;
+    top: 255px;
+    left: 501px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
+.scoreComp{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 320px;
+    left: 500px;
+}
+.scoreAvgTitle{
+    position: absolute;
+    top: 300px;
+    left: 500px;
+}
+.scoreTxt1{
+    position: absolute;
+    top: 325px;
+    left: 501px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
+.scoreTxt2{
+    position: absolute;
+    top: 355px;
+    left: 501px;
+    font-family: sans-serif;
+    color: white;
+    font-size: 1rem;
+}
