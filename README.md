@@ -2,6 +2,11 @@
 Important note: if you are on a smaller display you may need to change the scale in your web browser<br />
 If for some reason someone finds this page feel free to do whatever you want with the code, <br />
 but I do not own the data just the code. <br />
+This visualizaton requiers the user to click on 2 dots to then show a more detailed comparison of the 2 selected players<br />
+It automatically removes the 2 players after the visualization is updated so you can select 2 more players afterwards<br />
+without haveing to click any remove buttons<br />
+In the second part of the visualization the driveing stats bar the width refers to the driving accuracy<br />
+Meaning that the wider the bar the higher the accuracy<br />
 In this visualization there are 4 files. <br />
 <ul>
   <li>golfStats.css (used for formatting)</li>

@@ -25,19 +25,25 @@ var svg = d3.select("#chart-id")
 var drivingSvg = d3.select(".driverComp")
     .append("svg");
 
+//used for comparing the 2 selected players birdie stats
 var birdieSvg = d3.select(".birdieComp")
     .append("svg");
 
+//used for comparing the 2 selected players putting stats
 var puttsSvg = d3.select(".puttsComp")
     .append("svg");
 
+//used for comparing the 2 selected players score stats
 var scoreSvg = d3.select(".scoreComp")
     .append("svg");
 
+//this is a tooltip used for showing the players name on :hover
 var div = d3.select("body").append("div")
     .attr("class", "tooltip-hover")
     .style("opacity", 0);
 
+//the below 4 vars are used to show the selected players names as well as display a legend for the color
+//that represents the player in the visulization
 var person1Txt = d3.select(".person1");
 var person1Legend = d3.select(".person1Legend")
     .append("svg");
@@ -45,11 +51,13 @@ var person2Txt = d3.select(".person2");
 var person2Legend = d3.select(".person2Legend")
     .append("svg");
 
+//the below 4 vars are used to show the titles for the bars
 var driverDistLabel = d3.select(".driverDistTitle");
 var birdiePerLabel = d3.select(".birdiePerTitle");
 var puttsAvgLabel = d3.select(".puttsAvgTitle");
 var scoreAvgLabel = d3.select(".scoreAvgTitle");
 
+//the below 8 vars are used to show the data that makes up the bars
 var driverTxt1 = d3.select(".driverTxt1");
 var driverTxt2 = d3.select(".driverTxt2");
 var birdiesTxt1 = d3.select(".birdiesTxt1");
@@ -59,8 +67,11 @@ var puttsTxt2 = d3.select(".puttsTxt2");
 var scoreTxt1 = d3.select(".scoreTxt1");
 var scoreTxt2 = d3.select(".scoreTxt2");
 
+//the personOne var is passed the object of the first person to be used in the second visualization
 var personOne = null;
+//the personTwo var is passed the object of the second person to be used in the second visualization
 var personTwo = null;
+//used for the first visualization to know which type of graph to draw
 var comparison = null;
 
 //calling createChart which will make the chart and set the default comparison to Yds/Drive
@@ -79,6 +90,7 @@ function stuff(data){
 
     function plotPoints(offset, comparison){
 
+        //below 2 are used to get the position of the points for the scatter plot
         x.domain(d3.extent(data, function(d) {
             return d["position"];
         }));
@@ -87,7 +99,7 @@ function stuff(data){
             return d[comparison];
         })]);
 
-
+    //is used to draw the dots
     var path = svg.selectAll("dot")
         .data(data)
         .enter()
@@ -102,6 +114,7 @@ function stuff(data){
         .attr("fill", "black")
         .style('opacity', .4)
         //mouse overs so that you know which dot you are about to press
+        //this also handels the displaying of the name on hover
         .on('mouseover', function (d,i){
             d3.select(this).transition()
                 .duration('10')
@@ -141,6 +154,8 @@ function stuff(data){
             }
         });
        
+        //this is used to make thie title of the graph makes it chartTitle which is a var that will store
+        //the title based on what the user selected from the html form
         svg.append("text")
             .attr("class", "p title")
             .attr("x", (width + (margin.left + margin.right))/2)
@@ -149,10 +164,12 @@ function stuff(data){
             .attr("font-size", "30px")
             .attr("font-family", "sans-serif")
             .text(chartTitle);
+        //this is the x axis
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
+        //this is the y axis
         svg.append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(y).tickFormat(function (d){
@@ -179,16 +196,19 @@ function stuff(data){
 }
 }
 
+//this function will update the graph used for the first visualization called by onclick in the html
 function updatePoints(){
     d3.json("https://raw.githubusercontent.com/Tyler-b-123/Data-Visualization-Project/master/playerStats.json").then(update);
 function update(data){
     console.log(data);
     
+    //getting the selected comparison from the html form
     var chartType = document.getElementById('selectForm').value;
     console.log(chartType);
 
     var chartTitle = null;
    
+    //block of if statments to create the correct graph based on the comparison type selected by the user
     if (chartType === "Yds/Drive"){
        // alert("You have chosen Yds/Drive");
         chartTitle = "Average Yards per Drive";
@@ -225,6 +245,7 @@ function update(data){
         updateGraph(15, "avgFinish");
     }
 
+//the offset is the lowest point on the graph used as to not waste space on the bottom
 function updateGraph(offset, comparison){
 
     x.domain(d3.extent(data, function(d) {
@@ -235,7 +256,7 @@ function updateGraph(offset, comparison){
         return d[comparison];
     })]);
 
-
+    //changing the graph to the new graph using transition's
     svg.selectAll("circle")
         .data(data)
         .transition()
@@ -247,16 +268,19 @@ function updateGraph(offset, comparison){
             return y(d[comparison]);
         });
     
+    //updating the title
     svg.select(".p.title")
         .transition()
         .duration(1000)
         .text(chartTitle);
 
+    //updating the x axis
     svg.select(".x.axis")
         .transition()
         .duration(1000)
         .call(d3.axisBottom(x));
 
+    //updating the y axis
     svg.select(".y.axis")
         .transition()
         .duration(1000)
@@ -264,6 +288,7 @@ function updateGraph(offset, comparison){
             return d3.format("") (d)
         }));
 
+    //updating the tredline
     var xSeries = d3.range(1, 51);
     var ySeries = data.map(function (d) { return parseFloat(d[comparison]); });
 
@@ -280,6 +305,7 @@ function updateGraph(offset, comparison){
 }
 }
 
+//creates the trend line
 function createTrendline(trendData){
     var trendline = svg.selectAll(".trendline")
             .data(trendData);
@@ -295,6 +321,7 @@ function createTrendline(trendData){
         .attr("stroke-width", 1);
 }
 
+//updates the tredline
 function modifyTrendLine(trendData){
     svg.selectAll(".trendline")
         .data(trendData)
@@ -330,7 +357,11 @@ function leastSquares(xSeries, ySeries) {
     return [slope, intercept, rSquare];
 }
 
+//this function will create the comparison for the second visualization
 function createComparison(){
+    //making the driver distance and accuracy bar
+    //more length = farther drive
+    //more width = more accuracy
     drivingSvg.selectAll("rect")
         .data([personOne, personTwo])
         .enter()
@@ -349,12 +380,14 @@ function createComparison(){
         })
         .style("stroke", "black")
         .style("stroke-width", "2");
-
+    
+    //setting up the txt so that it can be modified later
     driverTxt1.append("text")
         .text("");
     driverTxt2.append("text")
         .text("");
 
+    //setting up the bars for the birdie comparison so that it can be modified later
     birdieSvg.selectAll("rect")
         .data([personOne, personTwo])
         .enter()
@@ -379,6 +412,7 @@ function createComparison(){
     birdiesTxt2.append("text")
         .text("");
 
+    //setting up the putts comparison so that it can be modified later
     puttsSvg.selectAll("rect")
         .data([personOne, personTwo])
         .enter()
@@ -403,6 +437,7 @@ function createComparison(){
     puttsTxt2.append("text")
         .text("");
 
+    //setting up the score comparison so that it can be modified later
     scoreSvg.selectAll("rect")
         .data([personOne, personTwo])
         .enter()
@@ -451,7 +486,10 @@ function createComparison(){
     
 }
 
+//this function is used to modify the second visualization called when there are 2 players selected using the onclick d3 function
+//in the first visualization 
 function modifyComparison(){
+    //error checking to make sure that 2 players are selected
     if (personOne === null){
         alert("You have zero players selected please select 2 players to use the comparison function.");
     }
@@ -459,6 +497,7 @@ function modifyComparison(){
         alert("You have only selected 1 player please select another player to use the comparison function.");
     }
     else{
+        //updates the avg driver dist and acc for the 2 players selected and then modifies the svg bars
         drivingSvg.selectAll("rect")
             .data([personOne, personTwo])
             .transition()
@@ -469,12 +508,13 @@ function modifyComparison(){
             .attr("height", function(d,i){
                 return ((d["drivingAcc"] / 74.8) * 40);
             });
-
+        //makes it display the title of that part
         driverDistLabel.selectAll("text")
             .transition()
             .duration(1000)
             .text("Driver Distance & Accuracy");
 
+        //displays the dist on the bars for the coresponding player
         driverTxt1.selectAll("text")
             .transition()
             .duration(1000)
@@ -484,7 +524,8 @@ function modifyComparison(){
             .transition()
             .duration(1000)
             .text(personTwo["Yds/Drive"] + " YDS");
-
+        
+        //modifys the birdie comparison
         birdieSvg.selectAll("rect")
             .data([personOne, personTwo])
             .transition()
@@ -492,12 +533,14 @@ function modifyComparison(){
             .attr("width", function(d,i){
                 return ((d["birdieConv"] / 38.8) * 100)
             });
-
+        
+        //modifys the title
         birdiePerLabel.selectAll("text")
             .transition()
             .duration(1000)
             .text("% Birdie Conv");
 
+        //modifies birdie% txt value
         birdiesTxt1.selectAll("text")
             .transition()
             .duration(1000)
@@ -508,6 +551,7 @@ function modifyComparison(){
             .duration(1000)
             .text(personTwo["birdieConv"] + "%");
 
+        //modifies the putts comparison
         puttsSvg.selectAll("rect")
             .data([personOne, personTwo])
             .transition()
@@ -515,12 +559,14 @@ function modifyComparison(){
             .attr("width", function(d,i){
                 return ((d["putts/Hole"] / 1.81) * 100)
             });
-
+        
+        //title
         puttsAvgLabel.selectAll("text")
             .transition()
             .duration(1000)
             .text("Avg Putts");
 
+        //modifies the avg putts value text
         puttsTxt1.selectAll("text")
             .transition()
             .duration(1000)
@@ -561,10 +607,11 @@ function modifyComparison(){
             .duration(1000)
             .text(personTwo["Name"]);
 
+        //will call this after the visualization is updated 
         removeSelectedPlayers();
     }
 }
-
+//called when there are 2 players selected it will then remove thoes 2 players after updating the visualization
 function removeSelectedPlayers(){
     if(personOne === null){
         alert("There are no players selected.");
