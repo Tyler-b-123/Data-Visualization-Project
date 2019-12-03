@@ -1,10 +1,18 @@
-# Data-Visualization-Project-dot-chart
-This is one of my ideas its not at all fialized just making sure that it works.<br />
-I plan on adding a hover to the dots to reveal the players name.<br />
-Golf stats from 2017-2018.<br />
-This is a list of what all of the fields refer too.
+# Data-Visualization-Project-Final-Version
+Important note: if you are on a smaller display you may need to change the scale in your web browser<br />
+If for some reason someone finds this page feel free to do whatever you want with the code, <br />
+but I do not own the data just the code. <br />
+In this visualization there are 4 files. <br />
 <ul>
-  <li>The "name" field refers to the golfers name.</li>
+  <li>golfStats.css (used for formatting)</li>
+  <li>golfStats.js (uses d3.js to make the graphs and other visualization's)</li>
+  <li>playerStats.json (is the data note: i call it from the github in the program)</li>
+  <li>index.html (the page that the user see's contains the divs and text explaning how it works)</li>
+</ul>
+This data set is the top 50 golfers from the 2017/2018 PGA Tour season. <br />
+This is a list of what all of the fields refer too from the json file.
+<ul>
+  <li>The "Name" field refers to the golfers name.</li>
   <li>The "position" field refers to the golfers rainking based on the stats.</li>
   <li>The "Yds/Drive" filed is the players average yards per drive.</li>
   <li>The "drivingAcc" filed is the players accuracy meaning the % of the time they hit the fairway off the tee.</li>
