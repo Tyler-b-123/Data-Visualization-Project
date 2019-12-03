@@ -15,6 +15,7 @@ In this visualization there are 4 files. <br />
   <li>index.html (the page that the user see's contains the divs and text explaning how it works)</li>
 </ul>
 This data set is the top 50 golfers from the 2017/2018 PGA Tour season. <br />
+https://www.foxsports.com/golf/stats?association=1&season=2018&category=ADVANCED&sort=8&sortOrder=0&page=1 <br />
 This is a list of what all of the fields refer too from the json file.
 <ul>
   <li>The "Name" field refers to the golfers name.</li>

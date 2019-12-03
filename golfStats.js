@@ -146,6 +146,8 @@ function stuff(data){
             else if (personOne != null && personTwo === null){
                 personTwo = d;
                 console.log(personTwo);
+                //know's that 2 players are selected so it will call the function to modify the second
+                //visualization based on the selected players stats
                 modifyComparison();
                 //alert(d["Name"] + " added as second person for comparison.");
             }
