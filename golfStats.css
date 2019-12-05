@@ -13,9 +13,14 @@
     font-family: sans-serif;
 }
 #chart-id{
-    position: relative;
+    position: absolute;
     left: 50px;
-    top: 300px;
+    top: 400px;
+}
+#chart-id2{
+    position: absolute;
+    left: 50px;
+    top: 400px;
 }
 #body{
     top: 200px;
@@ -213,4 +218,13 @@ div.tooltip-hover{
     font-family: sans-serif;
     color: white;
     font-size: 1rem;
+}
+.form1{
+    position: relative;
+    width: 150px;
+}
+.form2{
+    position: relative;
+    top: 20px;
+    width: 150px;
 }

@@ -15,6 +15,7 @@
     </div>
     <div id="body">
     <h2>Please select the statistic to compare</h2>
+    <div class="form1">
     <form name="firstForm" action="#" method="POST">
             <select name="toBeCompared" id="selectForm">
                 <option value="Yds/Drive">Yds/Drive</option>
@@ -26,11 +27,28 @@
                 <option value="avgFinish">Average finish</option>
             </select>
             <br><br>
-            <input type="button" value="Submit" onclick="updatePoints()">
-            <button type="reset" value="Reset">Reset</button>
-            </form>
+            <input type="button" value="Submit 1st" onclick="updatePoints()">
+    </form>
+    </div>
+    <div class="form2">
+        <form name="secondForm">
+            <select name="toBeCompared2" id="selectForm2">
+                <option value="drivingAcc2">Driver Accuracy</option>
+                <option value="Yds/Drive2">Yds/Drive</option>
+                <option value="putts/Hole2">AVG Putts per Hole</option>
+                <option value="birdies2">Amount of birdies</option>
+                <option value="birdieConv2">Birdie conversion rate</option>
+                <option value="avgScore2">Average score</option>
+                <option value="avgFinish2">Average finish</option>
+                <option value="Nothing">Nothing</option>
+            </select>
+            <br><br>
+            <input type="button" value="Submit 2nd" onclick="updatePoints2()">
+    </form>
+    </div>
     </div>
     <div id="chart-id"></div>
+    <div id="chart-id2"></div>
     <div id="hover-id"></div>
     <div id="golfHole">
         <div class="person1"></div>

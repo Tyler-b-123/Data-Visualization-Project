@@ -21,6 +21,13 @@ var svg = d3.select("#chart-id")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var svg2 = d3.select("#chart-id2")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 //used for comparing the 2 seleted players driver statistics
 var drivingSvg = d3.select(".driverComp")
     .append("svg");
@@ -192,10 +199,78 @@ function stuff(data){
         var trendData = [[x1,y1,x2,y2]];
 
         createTrendline(trendData);
+        createChartSecond(offset, comparison);
+        }
 
+        function createChartSecond(offset, comparison){
+
+            x.domain(d3.extent(data, function(d) {
+                return d["position"];
+            }));
+            
+            y.domain([50, d3.max(data, function (d){
+                return d["drivingAcc"];
+            })]);
+    
+            var path = svg2.selectAll("dot")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("r", 5)
+            .attr("cx", function (d){
+                return x(d["position"]);
+            })
+            .attr("cy", function (d){
+                return y(d["drivingAcc"]);
+            })
+            .attr("fill", "green")
+            .style('opacity', .4)
+            //mouse overs so that you know which dot you are about to press
+            //this also handels the displaying of the name on hover
+            .on('mouseover', function (d,i){
+                d3.select(this).transition()
+                    .duration('10')
+                    .style('opacity', 1);
+                div.transition()
+                    .duration('50')
+                    .style("opacity", 1);
+                div.html(d["Name"])
+                    .style("left", (d3.event.pageX + 10) + "px")
+                    .style("top", (d3.event.pageY - 15) + "px");
+    
+            })
+            .on('mouseout', function (d,i){
+                d3.select(this).transition()
+                    .duration('10')
+                    .style('opacity', .4);
+                div.transition()
+                    .duration('50')
+                    .style("opacity", 0);
+            });
+    
+            svg2.append("g")
+                .attr("class", "y axis")
+                .call(d3.axisRight(y).tickFormat(function (d){
+                    return d3.format("") (d)
+                }));
+
+                var xSeries = d3.range(1, 51);
+                var ySeries = data.map(function(d) {return parseFloat(d["drivingAcc"]); });
+        
+                var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+        
+                var x1 = 1;
+                var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+                var x2 = 50;
+                var y2 = leastSquaresCoeff[0] * 50 + leastSquaresCoeff[1];
+                var trendData2 = [[x1,y1,x2,y2]];
+        
+                createTrendLine2(trendData2);
+    
         }
 
 }
+    
 }
 
 //this function will update the graph used for the first visualization called by onclick in the html
@@ -307,6 +382,118 @@ function updateGraph(offset, comparison){
 }
 }
 
+function updatePoints2(){
+    d3.json("https://raw.githubusercontent.com/Tyler-b-123/Data-Visualization-Project/master/playerStats.json").then(update);
+function update(data){
+    console.log(data);
+    
+    //getting the selected comparison from the html form
+    var chartType = document.getElementById('selectForm2').value;
+    console.log(chartType);
+
+    //block of if statments to create the correct graph based on the comparison type selected by the user
+    if (chartType === "Nothing"){
+        updateGraph(0,0);
+    }
+    if (chartType === "Yds/Drive2"){
+       // alert("You have chosen Yds/Drive");
+        updateGraph(285, "Yds/Drive");
+    }
+    if (chartType === "drivingAcc2"){
+      //  alert("You have chosen drivingAcc");
+        updateGraph(50, "drivingAcc");
+    }
+    if (chartType === "putts/Hole2"){
+       //alert("You have chosen putts/Hole");
+       updateGraph(1.68, "putts/Hole");
+    }
+    if (chartType === "birdies2"){
+       // alert("You have chosen birdies");
+        updateGraph(100, "birdies");
+    }
+    if (chartType === "birdieConv2"){
+      //  alert("You have chosen the birdie conversion rate");
+        updateGraph(25, "birdieConv");
+    }
+    if (chartType === "avgScore2"){
+      //  alert("You have chosen the average score");
+        updateGraph(68.5, "avgScore");
+    }
+    if (chartType === "avgFinish2"){
+      //  alert("You have chosen the average finish");
+        updateGraph(15, "avgFinish");
+    }
+
+//the offset is the lowest point on the graph used as to not waste space on the bottom
+function updateGraph(offset, comparison){
+
+    if (offset === 0 && comparison === 0){
+        svg2.selectAll("circle")
+        .data(data)
+        .transition()
+        .duration(1000)
+        .attr("cx", function (d){
+            return (0);
+        })
+        .attr("cy", function (d){
+            return (0);
+        })
+        .style("fill", "white");
+
+        svg2.selectAll(".trendline2")
+        .transition()
+        .duration(1000)
+        .style("fill", "white")
+        .style("opacity", "0");
+    }
+    else{
+    x.domain(d3.extent(data, function(d) {
+        return d["position"];
+    }));
+        
+    y.domain([offset, d3.max(data, function (d){
+        return d[comparison];
+    })]);
+
+    //changing the graph to the new graph using transition's
+    svg2.selectAll("circle")
+        .data(data)
+        .transition()
+        .duration(1000)
+        .attr("cx", function (d){
+            return x(d["position"]);
+        })
+        .attr("cy", function (d){
+            return y(d[comparison]);
+        })
+        .style("fill", "green");
+
+    //updating the y axis
+    svg2.select(".y.axis")
+        .transition()
+        .duration(1000)
+        .call(d3.axisRight(y).tickFormat(function (d){
+            return d3.format("") (d)
+        }));
+
+    //updating the tredline
+    var xSeries = d3.range(1, 51);
+    var ySeries = data.map(function (d) { return parseFloat(d[comparison]); });
+
+    var leastSquaresCoeff = leastSquares(xSeries, ySeries);
+
+    var x1 = 1;
+    var y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+    var x2 = 50;
+    var y2 = leastSquaresCoeff[0] * 50 + leastSquaresCoeff[1];
+    var trendData2 = [[x1, y1, x2, y2]];
+
+    modifyTrendLine2(trendData2);
+    }
+}
+}
+}
+
 //creates the trend line
 function createTrendline(trendData){
     var trendline = svg.selectAll(".trendline")
@@ -322,6 +509,20 @@ function createTrendline(trendData){
         .attr("stroke", "black")
         .attr("stroke-width", 1);
 }
+function createTrendLine2(trendData2){
+    var trendline = svg2.selectAll(".trendline2")
+            .data(trendData2);
+
+    trendline.enter()
+        .append("line")
+        .attr("class", "trendline2")
+        .attr("x1", function (d){ return x(d[0]); })
+        .attr("y1", function (d){ return y(d[1]); })
+        .attr("x2", function (d){ return x(d[2]); })
+        .attr("y2", function (d){ return y(d[3]); })
+        .attr("stroke", "green")
+        .attr("stroke-width", 1);
+}
 
 //updates the tredline
 function modifyTrendLine(trendData){
@@ -333,6 +534,18 @@ function modifyTrendLine(trendData){
         .attr("y1", function (d){ return y(d[1]); })
         .attr("x2", function (d){ return x(d[2]); })
         .attr("y2", function (d){ return y(d[3]); });
+}
+
+function modifyTrendLine2(trendData2){
+    svg2.selectAll(".trendline2")
+        .data(trendData2)
+        .transition()
+        .duration(1000)
+        .attr("x1", function (d){ return x(d[0]); })
+        .attr("y1", function (d){ return y(d[1]); })
+        .attr("x2", function (d){ return x(d[2]); })
+        .attr("y2", function (d){ return y(d[3]); })
+        .style("opacity", "1");
 }
 
 
