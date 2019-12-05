@@ -13,6 +13,9 @@ var x = d3.scaleLinear()
 var y = d3.scaleLinear()
         .range([height, 0]);
 
+var y2 = d3.scaleLinear()
+        .range([height, 0]);
+
 //selecting the html div for the scatter plot to go
 var svg = d3.select("#chart-id")
     .append("svg")
@@ -249,7 +252,8 @@ function stuff(data){
             });
     
             svg2.append("g")
-                .attr("class", "y axis")
+                .attr("class", "y2 axis")
+                .attr("transform", "translate( " + width + ", 0 )")
                 .call(d3.axisRight(y).tickFormat(function (d){
                     return d3.format("") (d)
                 }));
