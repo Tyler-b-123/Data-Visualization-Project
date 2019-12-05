@@ -2,7 +2,7 @@
 //CSCI 490/680 Final Project
 
 //setting up the size of the graph for the first part
-var margin = {top: 100, right: 20, bottom: 30, left:40},
+var margin = {top: 100, right: 40, bottom: 30, left:40},
     width = 800 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -473,7 +473,7 @@ function updateGraph(offset, comparison){
         .style("fill", "green");
 
     //updating the y axis
-    svg2.select(".y.axis")
+    svg2.select(".y2.axis")
         .transition()
         .duration(1000)
         .call(d3.axisRight(y).tickFormat(function (d){
